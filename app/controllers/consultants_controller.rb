@@ -17,6 +17,12 @@ class ConsultantsController < ApplicationController
     end
   end
 
+  def deactivate
+    consultant = Consultant.find(params[:id])
+    consultant.update!(active: false)
+    redirect_to consultants_path, notice: "Berater:in deaktiviert."
+  end
+
   private
 
   def consultant_params

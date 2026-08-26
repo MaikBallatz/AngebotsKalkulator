@@ -23,4 +23,15 @@ RSpec.describe "Consultants", type: :request do
       expect(response.body).to include("Petra Neuling")
     end
   end
+
+  describe "PATCH /consultants/:id/deactivate" do
+    it "marks the consultant as inactive" do
+      consultant = create(:consultant, name: "Alte Beraterin", active: true)
+
+      patch deactivate_consultant_path(consultant)
+
+      expect(response).to redirect_to(consultants_path)
+      expect(consultant.reload.active).to eq(false)
+    end
+  end
 end

@@ -13,9 +13,11 @@ gem "jbuilder"
 gem "tailwindcss-rails", "~> 4.6"   # v4 = @theme tokens; do not float to v5 unpinned
 gem "devise", "~> 5.0"
 gem "bootsnap", require: false
+gem "rubyzip", require: "zip"   # unzip/rezip the .docx quote templates
 
 group :development do
   gem "web-console"
+  gem "letter_opener"   # preview outgoing mail in the browser instead of real SMTP
 end
 
 group :development, :test do

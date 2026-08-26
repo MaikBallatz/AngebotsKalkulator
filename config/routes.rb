@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     patch :deactivate, on: :member
   end
 
-  resources :quotes, only: [:index, :new, :create, :show]
+  resources :quotes, only: [:index, :new, :create, :show] do
+    post :deliver_word, on: :member
+  end
 
   get "design", to: "design#index"
   get "flow", to: "flow#index"

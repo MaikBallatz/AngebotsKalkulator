@@ -1,7 +1,11 @@
 <%= render "shared/back_link", path: quotes_path %>
 
 <div class="bg-surface rounded-card shadow p-6">
-  <h1 class="text-2xl font-bold text-ink mb-6"><%= @quote.company_name %></h1>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-ink"><%= @quote.company_name %></h1>
+    <%= button_to "Word-Dokument per E-Mail versenden", deliver_word_quote_path(@quote), method: :post,
+          class: "bg-brand-600 hover:bg-brand-700 text-brand-ink font-medium py-2 px-4 rounded-control" %>
+  </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
     <div>
@@ -19,6 +23,10 @@
     <div>
       <p class="text-sm text-ink-muted">Adresse</p>
       <p class="text-sm text-ink mt-1 whitespace-pre-line"><%= @quote.address %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Telefon</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.phone %></p>
     </div>
     <div>
       <p class="text-sm text-ink-muted">Gesuchte Position</p>

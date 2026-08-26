@@ -11,6 +11,14 @@ class QuotesController < ApplicationController
     @quote = Quote.find(params[:id])
   end
 
+  def deliver_word
+    quote = Quote.find(params[:id])
+    document = QuoteWordDocumentBuilder.new(quote).call
+    QuoteMailer.word_document(quote, document).deliver_now
+
+    redirect_to quote_path(quote), notice: "Word-Dokument an #{quote.consultant.email} geschickt."
+  end
+
   def create
     @quote = Quote.new(quote_params)
 
@@ -25,7 +33,7 @@ class QuotesController < ApplicationController
 
   def quote_params
     params.require(:quote).permit(
-      :angebotstyp, :consultant_id, :company_name, :contact_person, :address,
+      :angebotstyp, :consultant_id, :company_name, :contact_person, :address, :phone,
       :position, :project_reference, :minimum_fee, :fee_rate_is_third,
       :fee_rate_percentage, :payment_term_days, :volume_limit
     )

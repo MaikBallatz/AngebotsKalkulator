@@ -44,6 +44,11 @@
     </div>
 
     <div class="mb-4">
+      <%= f.label :phone, "Telefon", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.text_field :phone, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+    </div>
+
+    <div class="mb-4">
       <%= f.label :position, "Gesuchte Position", class: "block text-sm font-medium text-ink-soft" %>
       <%= f.text_field :position, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
       <% @quote.errors.full_messages_for(:position).each do |message| %>

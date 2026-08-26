@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # Your first real resource replaces this later.
   root "home#index"
 
-  resources :consultants, only: [:index]
+  resources :consultants, only: [:index, :new, :create]
 
   get "design", to: "design#index"
   get "flow", to: "flow#index"

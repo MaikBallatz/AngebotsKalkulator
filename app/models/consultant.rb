@@ -1,4 +1,6 @@
 # Shared, non-user-owned model: AngebotsPilot has no login (see CLAUDE.md, Part 1).
 # Every consultant is visible to everyone; there is no per-user scoping to apply here.
 class Consultant < ApplicationRecord
+  validates :name, presence: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 end

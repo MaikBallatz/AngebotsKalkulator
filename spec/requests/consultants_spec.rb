@@ -13,4 +13,14 @@ RSpec.describe "Consultants", type: :request do
       expect(response.body).to include("Max Mustermann")
     end
   end
+
+  describe "POST /consultants" do
+    it "adds a new consultant" do
+      post consultants_path, params: { consultant: { name: "Petra Neuling", email: "petra.neuling@head-gate.de" } }
+
+      expect(response).to redirect_to(consultants_path)
+      follow_redirect!
+      expect(response.body).to include("Petra Neuling")
+    end
+  end
 end

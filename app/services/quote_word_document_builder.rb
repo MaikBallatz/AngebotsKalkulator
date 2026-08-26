@@ -4,7 +4,10 @@
 # were prepared.
 class QuoteWordDocumentBuilder
   TEMPLATES = {
-    "fix" => Rails.root.join("lib/word_templates/fix.docx")
+    "fix" => Rails.root.join("lib/word_templates/fix.docx"),
+    "variable" => Rails.root.join("lib/word_templates/variable.docx"),
+    "englisch" => Rails.root.join("lib/word_templates/englisch.docx"),
+    "volumelimit" => Rails.root.join("lib/word_templates/volumelimit.docx")
   }.freeze
 
   def initialize(quote)
@@ -50,13 +53,16 @@ class QuoteWordDocumentBuilder
       "{{FEE_RATE_TEXT}}" => fee_rate_text,
       "{{MINIMUM_FEE}}" => quote.minimum_fee.to_i.to_s,
       "{{PAYMENT_TERM_DAYS}}" => quote.payment_term_days.to_s,
+      "{{VOLUME_LIMIT}}" => quote.volume_limit.to_s,
       "{{DATE}}" => Date.current.strftime("%d.%m.%Y")
     }
   end
 
   def fee_rate_text
-    return "ein Drittel" if quote.fee_rate_is_third?
-
-    "#{quote.fee_rate_percentage.to_s.sub(/\.0\z/, "")} %"
+    if quote.fee_rate_is_third?
+      quote.englisch? ? "one third" : "ein Drittel"
+    else
+      "#{quote.fee_rate_percentage.to_s.sub(/\.0\z/, "")} %"
+    end
   end
 end

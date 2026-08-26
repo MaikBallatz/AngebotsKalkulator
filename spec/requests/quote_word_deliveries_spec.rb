@@ -32,4 +32,41 @@ RSpec.describe "Quote word delivery", type: :request do
     expect(document_xml).to include("10 Tage")
     expect(document_xml).not_to include("{{")
   end
+
+  it "fills the Variable-Nebenkosten template" do
+    quote = create(:quote, angebotstyp: "variable", payment_term_days: 14)
+
+    post deliver_word_quote_path(quote)
+
+    document_xml = document_xml_from(ActionMailer::Base.deliveries.last)
+    expect(document_xml).to include("Berater-Reisekosten werden nach effektivem Aufwand")
+    expect(document_xml).to include("14 Tage")
+    expect(document_xml).not_to include("{{")
+  end
+
+  it "fills the Englisch template" do
+    quote = create(:quote, angebotstyp: "englisch")
+
+    post deliver_word_quote_path(quote)
+
+    document_xml = document_xml_from(ActionMailer::Base.deliveries.last)
+    expect(document_xml).to include("Musterfirma GmbH")
+    expect(document_xml).to include("one third")
+    expect(document_xml).not_to include("{{")
+  end
+
+  it "fills the Volume-Limit template with the entered volume" do
+    quote = create(:quote, angebotstyp: "volumelimit", volume_limit: 120)
+
+    post deliver_word_quote_path(quote)
+
+    document_xml = document_xml_from(ActionMailer::Base.deliveries.last)
+    expect(document_xml).to include("bis zu 120 potenziell")
+    expect(document_xml).not_to include("{{")
+  end
+
+  def document_xml_from(mail)
+    zip = Zip::File.open_buffer(mail.attachments.first.body.raw_source)
+    zip.read("word/document.xml")
+  end
 end

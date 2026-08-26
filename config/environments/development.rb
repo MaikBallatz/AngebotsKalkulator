@@ -34,9 +34,23 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
-  # Preview mail in the browser instead of a real SMTP server — until real
-  # credentials go into .env (see CLAUDE.md Part 4), see docs/EDGE-DEPLOY-style notes.
-  config.action_mailer.delivery_method = :letter_opener
+  # Real SMTP once .env carries the Headgate mail server settings; falls back
+  # to a browser preview (letter_opener) otherwise. Credentials live only in
+  # .env (gitignored) — see CLAUDE.md Part 4.
+  if ENV["SMTP_ADDRESS"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch("SMTP_ADDRESS"),
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      domain: ENV["SMTP_DOMAIN"],
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
+      enable_starttls_auto: true
+    }
+  else
+    config.action_mailer.delivery_method = :letter_opener
+  end
   config.action_mailer.perform_deliveries = true
 
   # Make template changes take effect immediately.

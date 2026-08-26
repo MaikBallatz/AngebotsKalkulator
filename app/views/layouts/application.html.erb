@@ -27,18 +27,10 @@
     <nav class="bg-surface border-b border-line">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
-          <div class="flex items-center">
+          <div class="flex items-center gap-6">
             <%= link_to "AngebotsPilot", root_path, class: "text-xl font-bold text-ink" %>
-          </div>
-          <div class="flex items-center gap-4">
-            <% if user_signed_in? %>
-              <span class="text-sm text-ink-muted"><%= current_user.email %></span>
-              <%= button_to "Sign out", destroy_user_session_path, method: :delete,
-                    class: "text-sm text-ink-soft hover:text-ink" %>
-            <% else %>
-              <%= link_to "Sign in", new_user_session_path, class: "text-sm text-ink-soft hover:text-ink" %>
-              <%= link_to "Sign up", new_user_registration_path, class: "text-sm bg-brand-600 hover:bg-brand-700 text-brand-ink py-1.5 px-3 rounded-control" %>
-            <% end %>
+            <%= link_to "Angebote", quotes_path, class: "text-sm px-3 py-2 rounded-control #{current_page?(quotes_path) ? "bg-muted text-ink font-medium" : "text-ink-soft hover:bg-muted hover:text-ink"}" %>
+            <%= link_to "Berater:innen", consultants_path, class: "text-sm px-3 py-2 rounded-control #{current_page?(consultants_path) ? "bg-muted text-ink font-medium" : "text-ink-soft hover:bg-muted hover:text-ink"}" %>
           </div>
         </div>
       </div>

@@ -1,0 +1,50 @@
+<%= render "shared/back_link", path: quotes_path %>
+
+<div class="bg-surface rounded-card shadow p-6">
+  <h1 class="text-2xl font-bold text-ink mb-6"><%= @quote.company_name %></h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
+    <div>
+      <p class="text-sm text-ink-muted">Angebotstyp</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.angebotstyp %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Berater:in</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.consultant.name %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Ansprechpartner</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.contact_person %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Adresse</p>
+      <p class="text-sm text-ink mt-1 whitespace-pre-line"><%= @quote.address %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Gesuchte Position</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.position %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Projekt-Kennziffer</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.project_reference %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Mindesthonorar</p>
+      <p class="text-sm text-ink mt-1">€ <%= @quote.minimum_fee %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Honorarsatz</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.fee_rate_is_third? ? "ein Drittel" : "#{@quote.fee_rate_percentage} %" %></p>
+    </div>
+    <div>
+      <p class="text-sm text-ink-muted">Zahlungsziel</p>
+      <p class="text-sm text-ink mt-1"><%= @quote.payment_term_days %> Tage</p>
+    </div>
+    <% if @quote.volumelimit? %>
+      <div>
+        <p class="text-sm text-ink-muted">Volumen-Limit</p>
+        <p class="text-sm text-ink mt-1"><%= @quote.volume_limit %> Zielpersonen</p>
+      </div>
+    <% end %>
+  </div>
+</div>

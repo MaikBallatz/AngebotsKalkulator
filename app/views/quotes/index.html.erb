@@ -1,0 +1,31 @@
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-ink">Angebote</h1>
+  <%= link_to "Angebot anlegen", new_quote_path, class: "bg-brand-600 hover:bg-brand-700 text-brand-ink font-medium py-2 px-4 rounded-control" %>
+</div>
+
+<% if @quotes.empty? %>
+  <div class="bg-surface rounded-card shadow p-6 text-center text-ink-muted">
+    Noch keine Angebote angelegt.
+  </div>
+<% else %>
+  <div class="bg-surface rounded-card shadow p-6">
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="text-left text-xs font-medium text-ink-muted uppercase tracking-wider px-4 py-3">Firma</th>
+          <th class="text-left text-xs font-medium text-ink-muted uppercase tracking-wider px-4 py-3">Position</th>
+          <th class="text-left text-xs font-medium text-ink-muted uppercase tracking-wider px-4 py-3">Berater:in</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @quotes.each do |quote| %>
+          <tr class="hover:bg-page border-b border-line">
+            <td class="px-4 py-3 text-sm text-ink"><%= link_to quote.company_name, quote_path(quote), class: "text-brand-600 hover:text-brand-700 underline underline-offset-2" %></td>
+            <td class="px-4 py-3 text-sm text-ink"><%= quote.position %></td>
+            <td class="px-4 py-3 text-sm text-ink"><%= quote.consultant.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

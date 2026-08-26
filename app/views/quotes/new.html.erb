@@ -1,0 +1,93 @@
+<%= render "shared/back_link", path: quotes_path %>
+
+<div class="bg-surface rounded-card shadow p-6 max-w-2xl">
+  <h1 class="text-2xl font-bold text-ink mb-6">Angebot anlegen</h1>
+
+  <%= form_with model: @quote, url: quotes_path do |f| %>
+    <div class="mb-4">
+      <%= f.label :angebotstyp, "Angebotstyp", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.select :angebotstyp,
+            [["Fix (feste Nebenkosten)", "fix"], ["Variable Nebenkosten", "variable"], ["Englisch", "englisch"], ["Volume-Limit", "volumelimit"]],
+            { include_blank: "Bitte wählen" },
+            class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600 bg-surface" %>
+      <% @quote.errors.full_messages_for(:angebotstyp).each do |message| %>
+        <p class="text-sm text-red-600 mt-1"><%= message %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :consultant_id, "Berater:in", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.collection_select :consultant_id, Consultant.active, :id, :name,
+            { include_blank: "Bitte wählen" },
+            class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600 bg-surface" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :company_name, "Firma", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.text_field :company_name, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+      <% @quote.errors.full_messages_for(:company_name).each do |message| %>
+        <p class="text-sm text-red-600 mt-1"><%= message %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :contact_person, "Ansprechpartner", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.text_field :contact_person, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+      <% @quote.errors.full_messages_for(:contact_person).each do |message| %>
+        <p class="text-sm text-red-600 mt-1"><%= message %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :address, "Adresse", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.text_area :address, rows: 3, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :position, "Gesuchte Position", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.text_field :position, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+      <% @quote.errors.full_messages_for(:position).each do |message| %>
+        <p class="text-sm text-red-600 mt-1"><%= message %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :project_reference, "Projekt-Kennziffer", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.text_field :project_reference, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :minimum_fee, "Mindesthonorar (€)", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.number_field :minimum_fee, step: "0.01", class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+      <% @quote.errors.full_messages_for(:minimum_fee).each do |message| %>
+        <p class="text-sm text-red-600 mt-1"><%= message %></p>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <div class="flex items-center gap-2">
+        <%= f.check_box :fee_rate_is_third, class: "h-4 w-4 accent-brand-600" %>
+        <%= f.label :fee_rate_is_third, "Standard-Honorarsatz (ein Drittel)", class: "text-sm font-medium text-ink-soft" %>
+      </div>
+      <p class="text-sm text-ink-muted mt-1">Häkchen raus, um stattdessen einen abweichenden Prozentsatz einzutragen.</p>
+      <%= f.label :fee_rate_percentage, "Abweichender Honorarsatz (%)", class: "block text-sm font-medium text-ink-soft mt-2" %>
+      <%= f.number_field :fee_rate_percentage, step: "0.1", class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :payment_term_days, "Zahlungsziel (Tage)", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.number_field :payment_term_days, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+    </div>
+
+    <div class="mb-6">
+      <%= f.label :volume_limit, "Volumen-Limit (Anzahl Zielpersonen)", class: "block text-sm font-medium text-ink-soft" %>
+      <%= f.number_field :volume_limit, class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600" %>
+      <p class="text-sm text-ink-muted mt-1">Nur relevant beim Angebotstyp „Volume-Limit".</p>
+      <% @quote.errors.full_messages_for(:volume_limit).each do |message| %>
+        <p class="text-sm text-red-600 mt-1"><%= message %></p>
+      <% end %>
+    </div>
+
+    <%= f.submit "Angebot anlegen", class: "bg-brand-600 hover:bg-brand-700 text-brand-ink font-medium py-2 px-4 rounded-control" %>
+  <% end %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_122708) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_123701) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -47,6 +47,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_122708) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "quotes", force: :cascade do |t|
+    t.text "address"
+    t.string "angebotstyp", null: false
+    t.string "company_name", null: false
+    t.integer "consultant_id", null: false
+    t.string "contact_person", null: false
+    t.datetime "created_at", null: false
+    t.boolean "fee_rate_is_third", default: true, null: false
+    t.decimal "fee_rate_percentage"
+    t.decimal "minimum_fee", null: false
+    t.integer "payment_term_days", default: 10, null: false
+    t.string "position", null: false
+    t.string "project_reference"
+    t.datetime "updated_at", null: false
+    t.integer "volume_limit"
+    t.index ["consultant_id"], name: "index_quotes_on_consultant_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -61,4 +79,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_122708) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "quotes", "consultants"
 end

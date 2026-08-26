@@ -24,8 +24,8 @@ It renders as boxes and arrows at http://localhost:3000/flow
 
 ```mermaid
 flowchart LR
-    A[Angebotstyp wählen<br/>Fix · Variable Nebenkosten · Englisch · Volume-Limit] --> B[Firma + Ansprechpartner eingeben<br/>Adresse per Web-Recherche vorgeschlagen, editierbar]
-    B --> C[Weitere Eckdaten eingeben<br/>Position, Honorar, Zahlungsziel, Berater]
+    A[Angebotstyp wählen<br/>Fix · Variable Nebenkosten · Englisch · Volume-Limit]:::fertig --> B[Firma + Ansprechpartner eingeben<br/>Adresse per Web-Recherche vorgeschlagen, editierbar]
+    B --> C[Weitere Eckdaten eingeben<br/>Position, Honorar, Zahlungsziel, Berater]:::fertig
     C --> D[Angebot automatisiert erzeugen<br/>Vorlagentext + Variablen + Datum]
     D --> E[Als Word an Berater zugestellt]
     E --> F[Berater prüft, unterschreibt<br/>lädt Word wieder hoch, Drag & Drop]

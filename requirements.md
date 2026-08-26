@@ -1,21 +1,21 @@
-# [PLACEHOLDER: Project Name]
+# AngebotsPilot
 
 > The WHAT. Say `/grill` and just talk — the agent listens, fills this in,
 > then sharpens it with you. Messy is right. CLAUDE.md is the HOW.
 
 ## Goal (1 sentence)
-[PLACEHOLDER: What does this tool do, for whom?]
+AngebotsPilot erzeugt aus wenigen Eckdaten automatisiert ein unterschriftsreifes Executive-Search-Angebot/Auftragsbestätigung der Headgate GmbH — als Word und PDF, direkt per E-Mail zugestellt.
 
 ## Who it is for
-[PLACEHOLDER: Who actually uses this? If that is someone other than you, say so —
-everything about people who are not in the room is a guess, and gets marked as one.]
+Mehrere Berater:innen bei der Headgate GmbH, die Angebote für Executive-Search-Suchaufträge schreiben. Kein Login/Passwort — man ordnet sich beim Anlegen eines Angebots per Namens-Auswahl zu (Dropdown oder Eintippen), daraus ergibt sich die E-Mail-Adresse nach festem Muster.
 
 ## What hurts today
-[PLACEHOLDER: What is annoying right now, in your words. This is the yardstick for
-whether the thing you build makes anything better.]
+Jedes Angebot wird von Hand aus einer von vier Word-Vorlagen zusammengebaut (fixe Nebenkosten / variable Nebenkosten / Englisch / Volume-Limit), Adress- und Honorardaten werden manuell eingetragen, Datum und die richtigen Absätze müssen jedes Mal geprüft werden — zeitaufwändig und fehleranfällig, gerade weil sich nur wenige Felder wirklich unterscheiden.
 
 ## Users & Ownership
-[PLACEHOLDER: Who uses it? What does each user own?]
+**Bestätigt:** Offener Zugang, kein Passwort-Login. Alle Berater:innen sehen alle Angebote — ein gemeinsames internes Team-Tool, keine Datentrennung zwischen Personen. Wer ein Angebot erstellt hat, wird als Feld am Angebot gespeichert (Beratername + abgeleitete E-Mail), nicht über einen Account.
+
+Berater:innen sind eine feste, editierbare Stammdaten-Liste (Name + E-Mail): neue Berater können hinzugefügt, ausscheidende deaktiviert werden.
 
 ## Primary Workflow (the one path that must work in the demo)
 
@@ -24,16 +24,23 @@ It renders as boxes and arrows at http://localhost:3000/flow
 
 ```mermaid
 flowchart LR
-    A[PLACEHOLDER: first step] --> B[PLACEHOLDER: and then]
+    A[Angebotstyp wählen<br/>Fix · Variable Nebenkosten · Englisch · Volume-Limit] --> B[Firma + Ansprechpartner eingeben<br/>Adresse per Web-Recherche vorgeschlagen, editierbar]
+    B --> C[Weitere Eckdaten eingeben<br/>Position, Honorar, Zahlungsziel, Berater]
+    C --> D[Angebot automatisiert erzeugen<br/>Vorlagentext + Variablen + Datum]
+    D --> E[Als Word an Berater zugestellt]
+    E --> F[Berater prüft, unterschreibt<br/>lädt Word wieder hoch, Drag & Drop]
+    F --> G[Fertiges Angebot als PDF per E-Mail zurückgesendet]
 ```
 
 ## Explicitly OUT of scope
-- [PLACEHOLDER: Everything you cut. Cutting is winning.]
+- **Bestätigt:** Keine Kundendatenbank/Wiederverwendung — jede Adresse wird pro Angebot frisch recherchiert bzw. eingegeben, nichts wird über Angebote hinweg gespeichert oder vorgeschlagen
+- **Bestätigt:** Keine digitale Signatur im Tool — Berater unterschreibt weiterhin selbst (Word öffnen, Signatur einfügen oder ausdrucken/scannen) und lädt die fertige Datei hoch
+- **Bestätigt:** Kein Versand direkt an den Kunden aus dem Tool heraus — nur Zustellung an den Berater per Mail, der leitet selbst weiter
+- **Bestätigt:** Kein Status-Tracking/Nachfassen (angenommen, abgelehnt, unterschrieben)
+- **Bestätigt:** Keine freie Bearbeitung einzelner Vertragsparagraphen im UI — nur die besprochenen strukturierten Felder + die vier Angebotstyp-Varianten
 
 ## The Demo
-[PLACEHOLDER: Written in the rehearsal at the end of /grill — what you show tomorrow
-at four, in what order, and what you answer when someone asks "und was bringt das?"
-Three to five lines, your words.]
+Kein Pitch-Termin nötig — das ist ein internes Hilfswerkzeug als Nebenprojekt, keine Präsentationsaufgabe im Workshop. Sobald es läuft: Angebotstyp wählen, Firma+Ansprechpartner eintippen (Adresse wird vorgeschlagen), restliche Eckdaten ergänzen, Word erhalten, geprüfte/unterschriebene Datei wieder hochladen, fertiges PDF per Mail bekommen.
 
 ## Demo Success Criterion (from the intro round, day 1)
-[PLACEHOLDER: "It's a success for me when …" — gets called up again at the demo.]
+Erfolg ist, wenn ich mit wenigen Eingaben ein korrektes, zum gewählten Angebotstyp passendes Angebot als PDF bekomme, ohne die Word-Vorlage je von Hand anzufassen.

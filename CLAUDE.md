@@ -30,18 +30,17 @@ AngebotsPilot hilft kleinen Handelsunternehmen, Angebote schnell und nachvollzie
 
 ## Ownership model
 
-User → Customers, User → Products, User → Quotes; Quote → QuoteLineItems (jede referenziert ein Product)
+Kein Nutzer-Ownership. Offener Zugang ohne Login — das hier ist ein gemeinsames internes Team-Tool, keine Datentrennung zwischen Personen. `Consultant` (Berater:in) ist eine feste, editierbare Stammdaten-Liste (Name + E-Mail, aktiv/inaktiv), kein Account. `Quote` (Angebot) trägt ein Feld `consultant` als Referenz auf diese Stammdaten — nicht auf einen User. Alle sehen alle Quotes.
 
 ## Scoping every query
 
-Every resource belongs to a user. Every controller query MUST go through `current_user`:
+Es gibt keine `current_user`-Scoping-Pflicht in diesem Projekt — es gibt keine Accounts, an denen sich Daten unterscheiden könnten:
 
-- Customers: `current_user.customers` (never `Customer.all` or `Customer.find`)
-- Products: `current_user.products` (never `Product.all` or `Product.find`)
-- Quotes: `current_user.quotes` (never `Quote.all` or `Quote.find`)
-- Quote line items (via Quote): `quote.quote_line_items` — never `QuoteLineItem.find` directly
-- Building: `current_user.quotes.new(...)`
-- Finding: `current_user.quotes.find(params[:id])` — raises 404 if not owned
+- Quotes: `Quote.all` / `Quote.find(params[:id])` ist hier korrekt
+- Consultants: `Consultant.all` ist hier korrekt
+- Devise/Login wird für den App-Zugriff nicht verwendet
+
+Das ist eine bewusste, im Grill-Interview bestätigte Abweichung vom Standard-Gerüst — nicht vergessen (aber auch nicht wegwischen), wenn diese Datei später einmal für ein anderes Projekt als Vorlage dient.
 
 The steps for adding a new user-owned model are in `.claude/rules/database.md`, which loads whenever you touch `db/` or `app/models/`.
 
@@ -115,7 +114,7 @@ VERIFY: all tests passing, functionality is working as expected
 - Check rendered HTML to verify output
 - Mock only 3rd-party external APIs — never mock your own code
 - When signing in during request specs, specify devise scope: `sign_in user, scope: :user`
-- Every spec that creates customers, products, quotes, or quote line items MUST pass `user: user` to the factory
+- Quotes and Consultants have no user association — specs create them without a `user:` argument
 
 ## Architecture: not-so-fat controllers, not-so-fat models
 

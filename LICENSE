@@ -1,0 +1,131 @@
+Copyright (c) 2026 KC Consulting GmbH, Hamburg
+Operating under the brand "Flatter Smaller Faster".
+
+KC Consulting GmbH · Mühlenkamp 6a · 22303 Hamburg · Germany
+Amtsgericht Hamburg, HRB 159014 · Managing Director: Kai Christiansen
+
+
+WORKSHOP HARNESS LICENSE
+========================
+
+This license covers the "Harness": the project template in this
+repository — its configuration, skills, rules, instruction files and
+documentation.
+
+It does not cover the "Workshop Result": the application you build with
+it. Different terms apply to each, and the difference is the point.
+
+
+1. THE WORKSHOP RESULT IS YOURS
+-------------------------------
+
+Whatever you build during the workshop is yours, permanently and
+without restriction. You may use it, run it, modify it, extend it,
+deploy it, and use it commercially, during and after the workshop, with
+no time limit and no further permission needed.
+
+This holds even though your application necessarily contains parts of
+the Harness — CLAUDE.md, design-system.md, the configuration and any
+generated scaffolding. KC Consulting GmbH grants you a perpetual,
+worldwide, royalty-free, non-exclusive right to use, modify and exploit
+those parts as embedded in your Workshop Result.
+
+You do not need to credit anyone. You do not need to ask.
+
+
+2. THE HARNESS ITSELF STAYS HERE
+--------------------------------
+
+The Harness as a standalone template is licensed to you for use in the
+workshop you were invited to, and for your own subsequent projects
+inside your organisation.
+
+You may not:
+
+  - redistribute or publish the Harness as a template, in whole or in
+    substantial part, outside your organisation;
+  - use it to run training, workshops or courses for third parties,
+    whether paid or unpaid;
+  - remove or alter this license file from copies of the Harness.
+
+Building your own projects with it inside your organisation is
+expressly permitted and encouraged. Handing it to someone else so they
+can run their own workshop is not.
+
+
+3. NO WARRANTY
+--------------
+
+THE HARNESS IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+KC CONSULTING GMBH DOES NOT WARRANT THAT THE HARNESS WILL BE
+ERROR-FREE, UNINTERRUPTED, OR THAT DEFECTS WILL BE CORRECTED.
+
+KC Consulting GmbH is under no obligation to provide maintenance,
+updates or support for the Harness.
+
+
+4. LIMITATION OF LIABILITY
+--------------------------
+
+To the extent permitted by law, KC Consulting GmbH, its directors,
+employees and contractors are not liable for any indirect, incidental,
+special or consequential damages, or for loss of profits, revenue or
+data, arising from or connected to the Harness or its use, even if
+advised of the possibility of such damages.
+
+Liability for damages caused intentionally or by gross negligence, and
+liability for injury to life, body or health, remains unaffected, as
+does liability under the German Product Liability Act
+(Produkthaftungsgesetz).
+
+
+5. GOVERNING LAW
+----------------
+
+This license is governed by the laws of the Federal Republic of
+Germany, excluding its conflict-of-law rules and the UN Convention on
+Contracts for the International Sale of Goods (CISG).
+
+Place of jurisdiction is Hamburg, Germany, to the extent such an
+agreement is legally permissible.
+
+If any provision of this license is or becomes invalid, the remaining
+provisions stay in force.
+
+
+THIRD-PARTY NOTICES
+===================
+
+The `/grill` skill (`.claude/skills/grill/SKILL.md`) is an adapted
+German-language derivative of `skills/productivity/grilling/SKILL.md`
+from https://github.com/mattpocock/skills, used under the MIT License.
+The original notice is reproduced in full as required:
+
+  MIT License
+
+  Copyright (c) 2026 Matt Pocock
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+Ruby, Rails and the gems listed in `Gemfile` are licensed by their
+respective authors under their own terms.

@@ -1,0 +1,62 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "EnterPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks.sh pre-enter-plan-mode"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks.sh stop"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Edit(/**)",
+      "Bash(bundle:*)",
+      "Bash(bin/bundle:*)",
+      "Bash(bin/rails:*)",
+      "Bash(bin/rspec:*)",
+      "Bash(bin/rake:*)",
+      "Bash(bin/dev:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(git init:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git restore:*)",
+      "Bash(git checkout:*)",
+      "WebSearch",
+      "Bash(curl -s:*)",
+      "Bash(lsof:*)",
+      "Bash(ps:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(perl -pi:*)",
+      "Bash(head:*)",
+      "Bash(cat:*)",
+      "Bash(rbenv:*)",
+      "Bash(ruby:*)",
+      "Bash(gem list:*)"
+    ]
+  }
+}

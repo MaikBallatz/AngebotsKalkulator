@@ -1,0 +1,4 @@
+#!/home/mballatz/.rbenv/versions/3.4.9/bin/ruby
+require_relative "../config/boot"
+require "rake"
+Rake.application.run

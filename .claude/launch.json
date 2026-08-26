@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "setuplotse-dev",
+      "runtimeExecutable": "bin/dev",
+      "runtimeArgs": [],
+      "port": 3010,
+      "env": { "PORT": "3010" }
+    }
+  ]
+}

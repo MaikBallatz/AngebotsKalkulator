@@ -1,0 +1,318 @@
+<%#
+  The brief and the primary path from requirements.md, drawn as boxes and arrows.
+
+  Why this page exists: mermaid does not render in Claude Desktop's Code tab
+  (anthropics/claude-code#52517, open since 2026-04-23), so the diagram /grill
+  writes would reach the team as raw source. This renders it where they already
+  look — the browser — with no library, no CDN and no build step.
+
+  The design page proved that a display can make people precise, and the working
+  part was not the anchor alone: the example sentence was printed on it. That is
+  why one is printed here too.
+
+  requirements.md stays the single source. This only draws it.
+
+  THE RULE FOR WHOEVER EDITS THIS NEXT: never write a step number, a step label or
+  a count into this file by hand. Every one of them must come from @steps.
+
+  It has been broken twice. Hardcoded example sentences pointed at "Schritt 6" on
+  three-step projects, and a hint said "Markier Schritt 1 als fertig" when step 1
+  was long since done. Both rendered fine, both passed the suite, and both taught
+  the reader that the page does not know their project — which costs more than the
+  sentence was ever worth.
+
+  A test cannot catch this class: the page returns 200 either way. Only the rule
+  can, so it is written where the next edit happens rather than in a document.
+%>
+
+<div class="space-y-8">
+
+  <div>
+    <h1 class="text-2xl font-bold text-ink">Der Hauptweg</h1>
+    <p class="text-xs text-ink-muted mt-3 max-w-3xl border-l-2 border-line-strong pl-3">
+      <strong class="text-ink-soft">Ändern kannst Du hier nichts</strong> — Du sagst es Claude
+      in Deinem Projektordner und lädst danach neu. Nur Du siehst diese Seite.
+    </p>
+  </div>
+
+  <%# --------------------------------------------------------------- Die Demo %>
+  <% if @demo %>
+    <div class="bg-brand-50 rounded-card p-6">
+      <h2 class="text-lg font-semibold text-ink">Was Du zeigst</h2>
+      <p class="text-sm text-ink mt-3 max-w-3xl whitespace-pre-line"><%= @demo %></p>
+      <p class="text-xs text-ink-muted mt-4">
+        Deine Antwort auf: <em>„Es ist morgen um 16 Uhr — was zeigst Du zuerst?"</em>
+        Was hier nicht vorkommt, muss auch nicht gebaut werden.
+      </p>
+    </div>
+  <% else %>
+    <div class="bg-surface rounded-card shadow p-6">
+      <h2 class="text-lg font-semibold text-ink">Was Du zeigst</h2>
+      <p class="text-sm text-ink-soft mt-3 max-w-3xl">
+        Steht noch nicht. Sag <code class="text-ink">/grill</code> — am Ende erzählst Du
+        einmal, was Du zeigen willst.
+      </p>
+    </div>
+  <% end %>
+
+  <%# ----------------------------------------------------------- Der Auftrag %>
+  <div class="bg-surface rounded-card shadow p-6">
+    <h2 class="text-lg font-semibold text-ink">Der Auftrag</h2>
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
+      <div>
+        <p class="text-sm text-ink-muted">Ziel</p>
+        <% if @goal %>
+          <p class="text-sm text-ink mt-1"><%= @goal %></p>
+        <% else %>
+          <p class="text-sm text-ink-soft mt-1">Steht noch nicht — sag <code class="text-ink">/grill</code>.</p>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-sm text-ink-muted">Für wen</p>
+        <% if @who %>
+          <p class="text-sm text-ink mt-1 whitespace-pre-line"><%= @who %></p>
+        <% else %>
+          <p class="text-sm text-ink-soft mt-1">Steht noch nicht.</p>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-sm text-ink-muted">Was heute nervt</p>
+        <% if @hurts %>
+          <p class="text-sm text-ink mt-1 whitespace-pre-line"><%= @hurts %></p>
+        <% else %>
+          <p class="text-sm text-ink-soft mt-1">Steht noch nicht.</p>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-sm text-ink-muted">Wer was sehen darf</p>
+        <% if @owner %>
+          <p class="text-sm text-ink mt-1 whitespace-pre-line"><%= @owner %></p>
+        <% elsif @steps.any? { |step| step[:done] } %>
+          <p class="text-sm text-red-600 mt-1">
+            Steht noch nicht — und es wird schon gebaut. Claude rät dann, wer welche
+            Daten sehen darf. Sag ihm: <em>„Klär mit mir, wer was sehen darf."</em>
+          </p>
+        <% else %>
+          <p class="text-sm text-ink-soft mt-1">Steht noch nicht.</p>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-sm text-ink-muted">Erfolgskriterium</p>
+        <% if @criterion %>
+          <p class="text-sm text-ink mt-1"><%= @criterion %></p>
+        <% else %>
+          <p class="text-sm text-ink-soft mt-1">Steht noch nicht.</p>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-sm text-ink-muted">Nicht dabei</p>
+        <% if @out %>
+          <p class="text-sm text-ink mt-1 whitespace-pre-line"><%= @out %></p>
+        <% else %>
+          <p class="text-sm text-ink-soft mt-1">Noch nichts gestrichen. Das ist selten ein gutes Zeichen.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% if @steps.any? { |step| step[:done] } && (@goal.nil? || @criterion.nil?) %>
+    <p class="text-sm text-red-600">
+      Es wird schon gebaut, aber
+      <%= [("das Ziel" if @goal.nil?), ("das Erfolgskriterium" if @criterion.nil?)].compact.to_sentence(two_words_connector: " und ", last_word_connector: " und ") %>
+      <%= (@goal.nil? && @criterion.nil?) ? "stehen" : "steht" %> noch nicht.
+      Ohne das lässt sich am Nachmittag nichts entscheiden — sag <code>/grill</code>.
+    </p>
+  <% end %>
+
+  <%# ------------------------------------------------------------- Der Pfad %>
+  <% if @steps.blank? %>
+    <div class="bg-surface rounded-card shadow p-6">
+      <div class="border border-line rounded-card py-12 text-center">
+        <p class="text-ink-muted">Der Hauptweg steht noch nicht.</p>
+        <p class="text-sm text-ink-muted mt-2">
+          Sag <code class="text-ink">/grill</code> — Du erzählst einmal, und er zeichnet ihn hier auf.
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <div class="bg-surface rounded-card shadow p-6">
+      <h2 class="text-xl font-semibold text-ink">Die Schritte</h2>
+      <p class="text-sm text-ink-muted mt-1">Der eine Ablauf, der funktionieren muss, wenn Du es zeigst.</p>
+      <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch gap-2 mt-6">
+        <% @steps.each_with_index do |step, i| %>
+          <% if i > 0 %>
+            <div class="hidden sm:flex items-center text-ink-muted px-1" aria-hidden="true">&rarr;</div>
+          <% end %>
+          <div class="flex items-center rounded-control px-4 py-3 <%= step[:done] ? "border border-brand-600 bg-brand-50" : "border border-dashed border-line-strong bg-page" %>">
+            <span class="text-xs text-ink-muted mr-2"><%= i + 1 %></span>
+            <span class="text-sm <%= step[:done] ? "text-ink" : "text-ink-soft" %>">
+              <%= step[:label] %>
+              <% if step[:detail] %>
+                <span class="block text-xs text-ink-muted"><%= step[:detail] %></span>
+              <% end %>
+            </span>
+            <% if step[:done] %>
+              <svg class="h-5 w-5 text-brand-600 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+              <span class="sr-only">— fertig</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <% built = @steps.count { |s| s[:done] } %>
+
+      <%# Status als Kennzahlen statt als Absätze: drei Fakten, die am Nachmittag im
+          Vorbeigehen gelesen werden — wie weit, läuft es, wie frisch. Darunter EINE
+          Erklärzeile. Vorher standen hier fünf graue Kleinabsätze übereinander, und
+          fünf graue Kleinabsätze liest um 15 Uhr niemand. %>
+      <div class="mt-6 pt-4 border-t border-line grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <p class="text-2xl font-bold text-ink"><%= built %> / <%= @steps.size %></p>
+          <p class="text-xs text-ink-muted mt-1">Schritte fertig · gestrichelt heißt offen</p>
+        </div>
+        <div>
+          <% if @tests.nil? %>
+            <p class="text-2xl font-bold text-ink-muted">&mdash;</p>
+            <p class="text-xs text-ink-muted mt-1">Tests noch nie gelaufen</p>
+          <% elsif @tests[:failed].zero? %>
+            <p class="text-2xl font-bold text-ink">grün</p>
+            <p class="text-xs text-ink-muted mt-1"><%= @tests[:total] %> Tests, geprüft <%= @tests[:when] %></p>
+          <% else %>
+            <p class="text-2xl font-bold text-red-600"><%= @tests[:failed] %> rot</p>
+            <p class="text-xs text-red-600 mt-1">von <%= @tests[:total] %> Tests, geprüft <%= @tests[:when] %></p>
+          <% end %>
+        </div>
+        <div>
+          <p class="text-2xl font-bold text-ink"><%= @changed || "&mdash;" %></p>
+          <p class="text-xs text-ink-muted mt-1">zuletzt geändert · Seite lädt nicht selbst nach</p>
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-2">
+        <% if @first_open %>
+          <p class="text-xs text-ink-muted">
+            Das Häkchen setzt Claude selbst — nachgesehen hat es niemand. Läuft Schritt
+            <%= @first_open %> längst und ist trotzdem gestrichelt, sag ihm:
+            <em class="text-ink-soft">„Markier Schritt <%= @first_open %> als fertig."</em>
+          </p>
+        <% else %>
+          <p class="text-xs text-ink-muted">
+            Alle Schritte markiert. Ob es wirklich läuft, siehst Du, wenn Du den Weg einmal
+            selbst abgehst.
+          </p>
+        <% end %>
+
+        <% if @tests && @tests[:failed].positive? %>
+          <p class="text-sm text-red-600">
+            Sag Claude: <em>„Lass die Tests laufen und repariere, was rot ist."</em>
+          </p>
+        <% end %>
+        <% if @unread.positive? %>
+          <p class="text-sm text-red-600">
+            <%= @unread %> <%= @unread == 1 ? "Schritt" : "Schritte" %> aus
+            <code>requirements.md</code> <%= @unread == 1 ? "taucht" : "tauchen" %> oben nicht auf.
+            Die Zeichnung ist unvollständig, nicht Dein Ablauf — sag Claude:
+            <em>„Schreib den Ablauf mit einfachen Pfeilen."</em>
+          </p>
+        <% end %>
+        <% if @unshown.present? %>
+          <p class="text-xs text-ink-muted">Nicht gezeichnet: <%= @unshown.uniq.join(", ") %>.</p>
+        <% end %>
+      </div>
+
+    <% if @branches.present? %>
+        <div class="mt-6 pt-4 border-t border-line">
+          <p class="text-sm font-medium text-ink-soft">Abzweigungen</p>
+          <div class="mt-2 space-y-1">
+            <% @branches.each do |b| %>
+              <p class="text-sm text-ink-soft">
+                <% if b[:step] %>
+                  <span class="text-ink-muted">ab Schritt <%= b[:step] %>:</span>
+                <% else %>
+                  <span class="text-ink-muted">ab <%= b[:from] %>:</span>
+                <% end %>
+                <% if b[:label].present? %>
+                  <span class="inline-flex items-center rounded-control bg-muted text-ink-soft text-xs font-medium px-2 py-1"><%= b[:label] %></span>
+                <% end %>
+                <span class="text-ink-muted" aria-hidden="true">&rarr;</span>
+                <span class="text-ink"><%= b[:to] %></span>
+              </p>
+            <% end %>
+          </div>
+          <p class="text-xs text-ink-muted mt-3">
+            Jede Abzweigung ist ein zweiter Weg, der gebaut und getestet werden will.
+          </p>
+        </div>
+      <% end %>
+
+      <% if @unread.positive? %>
+        <p class="text-sm text-red-600 mt-4">
+          <%= @unread %> <%= @unread == 1 ? "Schritt" : "Schritte" %> aus
+          <code>requirements.md</code> <%= @unread == 1 ? "taucht" : "tauchen" %> oben nicht auf —
+          der Weg ist unvollständig. Sag Claude:
+          <em>„Der Ablauf wird nicht ganz angezeigt — schreib ihn mit einfachen Pfeilen."</em>
+        </p>
+      <% end %>
+    </div>
+
+    <%# ------------------------------------------------- Der vorgesprochene Satz %>
+    <div class="bg-brand-50 rounded-card p-6">
+      <h2 class="text-lg font-semibold text-ink">Jetzt Du</h2>
+      <p class="text-sm text-ink-soft mt-2 max-w-3xl">
+        Geh den Weg einmal laut durch — an einem echten Fall von letzter Woche, nicht an der Regel.
+        <strong class="text-ink">Welcher Schritt fehlt, und welcher heißt falsch?</strong>
+        Sag es Claude, ungefähr so:
+      </p>
+      <div class="mt-4 space-y-2">
+        <% @examples.each do |satz| %>
+          <p class="text-sm text-ink"><%= satz %></p>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @extras.present? %>
+      <div class="space-y-3">
+        <% @extras.each do |extra| %>
+          <details class="bg-surface rounded-card shadow p-6">
+            <summary class="text-lg font-semibold text-ink cursor-pointer"><%= extra[:title] %></summary>
+
+            <div class="mt-6">
+              <%# if/elsif rather than case/when: ERB turns the whitespace between a
+                  case tag and its first when tag into output, which will not compile. %>
+              <% if extra[:kind] == :rows %>
+                <div class="max-w-3xl">
+                  <% extra[:rows].each do |left, label, right| %>
+                    <div class="flex flex-wrap items-center gap-2 py-3 border-b border-line text-sm">
+                      <span class="text-ink"><%= left %></span>
+                      <% if right.present? %>
+                        <span class="text-ink-muted" aria-hidden="true">&rarr;</span>
+                        <span class="text-ink"><%= right %></span>
+                      <% end %>
+                      <% if label.present? %>
+                        <span class="inline-flex items-center rounded-control bg-muted text-ink-soft text-xs font-medium px-2 py-1"><%= label %></span>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              <% else %>
+                <div class="max-w-3xl space-y-1">
+                  <% extra[:lines].each do |keyword, rest| %>
+                    <p class="text-sm <%= keyword.in?(%w[Szenario Scenario]) ? "font-semibold text-ink mt-4" : "text-ink-soft" %>">
+                      <span class="text-ink-muted"><%= keyword %></span> <%= rest %>
+                    </p>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <p class="text-xs text-ink-muted mt-4"><%= extra[:hint] %></p>
+            </div>
+          </details>
+        <% end %>
+      </div>
+    <% end %>
+
+  <% end %>
+
+</div>

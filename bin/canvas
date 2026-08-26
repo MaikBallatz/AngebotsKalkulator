@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# canvas — Dokku remote CLI. Target is configurable via .canvas.config (or env).
+#
+# Usage:
+#   bin/canvas apps:list
+#   bin/canvas logs <appname> -t
+#   bin/canvas config:show <appname>
+#   bin/canvas run <appname> rake db:migrate
+#
+# Deploy target: edit .canvas.config at the repo root (CANVAS_USER/HOST/PORT).
+# There is no default host — an unconfigured harness must not deploy anywhere.
+DIR="$(CDPATH= cd "$(dirname "$0")/.." && pwd)"
+[ -f "$DIR/.canvas.config" ] && . "$DIR/.canvas.config"
+: "${CANVAS_USER:=dokku}"
+: "${CANVAS_HOST:=}"
+if [ -z "$CANVAS_HOST" ]; then
+  echo "canvas: no deploy target configured. Set CANVAS_HOST in .canvas.config." >&2
+  exit 1
+fi
+: "${CANVAS_PORT:=2222}"
+exec ssh -p "$CANVAS_PORT" -t "$CANVAS_USER@$CANVAS_HOST" "$@"

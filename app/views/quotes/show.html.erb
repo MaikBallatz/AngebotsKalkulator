@@ -3,8 +3,12 @@
 <div class="bg-surface rounded-card shadow p-6">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-ink"><%= @quote.company_name %></h1>
-    <%= button_to "Word-Dokument per E-Mail versenden", deliver_word_quote_path(@quote), method: :post,
-          class: "bg-brand-600 hover:bg-brand-700 text-brand-ink font-medium py-2 px-4 rounded-control" %>
+    <div class="flex gap-2">
+      <%= button_to "Word-Dokument per E-Mail versenden", deliver_word_quote_path(@quote), method: :post,
+            class: "bg-brand-600 hover:bg-brand-700 text-brand-ink font-medium py-2 px-4 rounded-control" %>
+      <%= link_to "Geprüftes Word hochladen", upload_quote_path(@quote),
+            class: "border border-line-strong hover:bg-muted text-ink-soft font-medium py-2 px-4 rounded-control" %>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">

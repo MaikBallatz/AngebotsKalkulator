@@ -28,8 +28,8 @@ flowchart LR
     B --> C[Weitere Eckdaten eingeben<br/>Position, Honorar, Zahlungsziel, Berater]:::fertig
     C --> D[Angebot automatisiert erzeugen<br/>Vorlagentext + Variablen + Datum]:::fertig
     D --> E[Als Word an Berater zugestellt]:::fertig
-    E --> F[Berater prüft, unterschreibt<br/>lädt Word wieder hoch, Drag & Drop]
-    F --> G[Fertiges Angebot als PDF per E-Mail zurückgesendet]
+    E --> F[Berater prüft, unterschreibt<br/>lädt Word wieder hoch, Drag & Drop]:::fertig
+    F --> G[Fertiges Angebot als PDF per E-Mail zurückgesendet]:::fertig
 ```
 
 ## Explicitly OUT of scope

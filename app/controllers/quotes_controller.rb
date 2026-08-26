@@ -19,6 +19,20 @@ class QuotesController < ApplicationController
     redirect_to quote_path(quote), notice: "Word-Dokument an #{quote.consultant.email} geschickt."
   end
 
+  def upload
+    quote = Quote.find(params[:id])
+
+    if request.post?
+      quote.signed_document.attach(params[:signed_document])
+      document = QuoteDocumentToPdfConverter.new(quote.signed_document.download).call
+      QuoteMailer.pdf_document(quote, document).deliver_now
+
+      redirect_to quote_path(quote), notice: "Fertiges PDF an #{quote.consultant.email} geschickt."
+    else
+      @quote = quote
+    end
+  end
+
   def create
     @quote = Quote.new(quote_params)
 

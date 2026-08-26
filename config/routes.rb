@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :quotes, only: [:index, :new, :create, :show] do
     post :deliver_word, on: :member
+    get :upload, on: :member
+    post :upload, on: :member
   end
 
   get "design", to: "design#index"

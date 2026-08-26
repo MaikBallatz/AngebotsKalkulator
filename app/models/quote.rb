@@ -2,6 +2,7 @@
 # Every quote is visible to everyone; there is no per-user scoping to apply here.
 class Quote < ApplicationRecord
   belongs_to :consultant
+  has_one_attached :signed_document
 
   enum :angebotstyp, { fix: "fix", variable: "variable", englisch: "englisch", volumelimit: "volumelimit" }
 

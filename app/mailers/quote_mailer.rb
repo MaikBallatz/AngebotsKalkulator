@@ -9,4 +9,15 @@ class QuoteMailer < ApplicationMailer
 
     mail(to: quote.consultant.email, subject: "Angebot #{quote.company_name} – bitte prüfen und unterschreiben")
   end
+
+  def pdf_document(quote, document)
+    @quote = quote
+
+    attachments["#{quote.company_name}.pdf"] = {
+      mime_type: "application/pdf",
+      content: document
+    }
+
+    mail(to: quote.consultant.email, subject: "Angebot #{quote.company_name} – fertiges PDF")
+  end
 end

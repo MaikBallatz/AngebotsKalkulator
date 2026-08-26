@@ -1,0 +1,18 @@
+<%= render "shared/back_link", path: quote_path(@quote) %>
+
+<div class="bg-surface rounded-card shadow p-6 max-w-lg">
+  <h1 class="text-2xl font-bold text-ink mb-2">Geprüftes Word hochladen</h1>
+  <p class="text-sm text-ink-muted mb-6">Für <%= @quote.company_name %> — danach bekommst du das fertige PDF per E-Mail.</p>
+
+  <%= form_with url: upload_quote_path(@quote), method: :post, multipart: true do |f| %>
+    <div class="border-2 border-dashed border-line-strong rounded-control p-8 text-center mb-6"
+         data-controller="dropzone"
+         data-action="dragover->dropzone#dragover dragleave->dropzone#dragleave drop->dropzone#drop">
+      <p class="text-sm text-ink-muted mb-3">Datei hierher ziehen oder auswählen</p>
+      <%= f.file_field :signed_document, data: { dropzone_target: "input" },
+            class: "block w-full rounded-control border border-line-strong px-3 py-2 shadow-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600 file:mr-3 file:py-1 file:px-3 file:rounded-control file:border-0 file:bg-muted file:text-ink-soft file:text-sm" %>
+    </div>
+
+    <%= f.submit "Hochladen", class: "bg-brand-600 hover:bg-brand-700 text-brand-ink font-medium py-2 px-4 rounded-control" %>
+  <% end %>
+</div>

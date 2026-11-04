@@ -10,7 +10,7 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
-gem "tailwindcss-rails", "~> 4.6"   # v4 = @theme tokens; do not float to v5 unpinned
+gem "tailwindcss-rails", "~> 4.7"   # v4 = @theme tokens; do not float to v5 unpinned
 gem "devise", "~> 5.0"
 gem "bootsnap", require: false
 gem "rubyzip", require: "zip"   # unzip/rezip the .docx quote templates
